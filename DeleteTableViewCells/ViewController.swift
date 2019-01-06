@@ -11,6 +11,38 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var products:[Product] = []
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.products.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ProductTableViewCell
+        cell.labelTitle.text = self.products[indexPath.row].name
+        cell.imageViewCell.image = UIImage(named: String(self.products[indexPath.row].id) + ".jpg")
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath)
+    {
+        if editingStyle == UITableViewCell.EditingStyle.delete
+        {
+            self.products.remove(at: indexPath.row)
+            tableView.reloadData()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let product = self.products[indexPath.row]
+        print(product.name)
+    }
+    
+    class Product {
+        var id:Int = 0
+        var name:String = ""
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,38 +83,5 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         products.append(pro7)
         
     }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.products.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ProductTableViewCell
-        cell.labelTitle.text = self.products[indexPath.row].name
-        cell.imageViewCell.image = UIImage(named: String(self.products[indexPath.row].id) + ".jpg")
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath)
-    {
-        if editingStyle == UITableViewCell.EditingStyle.delete
-        {
-            self.products.remove(at: indexPath.row)
-            tableView.reloadData()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let product = self.products[indexPath.row]
-        print(product.name)
-    }
-    
-    class Product {
-        var id:Int = 0
-        var name:String = ""
-    }
-    
 }
 
