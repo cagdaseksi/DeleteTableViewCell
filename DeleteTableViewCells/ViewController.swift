@@ -24,7 +24,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath)
     {
         if editingStyle == UITableViewCell.EditingStyle.delete
@@ -37,6 +37,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let product = self.products[indexPath.row]
         print(product.name)
+        performSegue(withIdentifier: "toProducts", sender: self)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toProducts" {
+            let svc = segue.destination as! ViewController
+            //svc.category = self.category
+        }
     }
     
     class Product {
